@@ -5,7 +5,13 @@
 (defn main
   [& _]
   (js/console.log "main" "called")
-  (let [title @(rf/subscribe [::subs/title])]
+  (let [route @(rf/subscribe [::subs/current-route])
+        title @(rf/subscribe [::subs/title])]
     (js/console.log "title" title)
-    [:h1
-     title]))
+    (js/console.log (clj->js route))
+    [:div
+     [:h1
+      title]
+     (if-let [view (-> route :data :view)]
+       [view]
+       [:p "Requested page not found"])]))

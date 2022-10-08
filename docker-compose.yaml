@@ -18,7 +18,7 @@ services:
     volumes:
       - ./render:/usr/local/render
     working_dir: /usr/local/render
-    command: deno run --reload --allow-net serve.tsx
+    command: deno run --reload --allow-net --location "http://localhost:3050/" serve.tsx
 
 volumes:
   maven:

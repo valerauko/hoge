@@ -4,6 +4,7 @@
             [re-frame.core :as re-frame]
             [hoge.effects]
             [hoge.events :as events]
+            [hoge.routes :as routes]
             [hoge.views :as views]))
 
 (defn ^:export view
@@ -13,6 +14,7 @@
  
 (defn ^:dev/after-load mount-root
   []
+  (routes/start-router)
   (re-frame/clear-subscription-cache!)
   (let [root-el (.getElementById js/document "app")]
     (rdom/unmount-component-at-node root-el)

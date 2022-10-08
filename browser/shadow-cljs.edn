@@ -4,7 +4,8 @@
  [[clj-kondo "2022.06.22"]
   
   [reagent "1.1.1"]
-  [re-frame "1.3.0"]]
+  [re-frame "1.3.0"]
+  [metosin/reitit "0.5.18"]]
 
  :dev-http {8280 "public"}
 
@@ -21,4 +22,5 @@
    :asset-path "/js"
    :modules
    {:compiled {:exports {setup hoge.core/setup
-                         view hoge.core/view}}}}}}
+                         view hoge.core/view
+                         navigate hoge.routes/navigate}}}}}}

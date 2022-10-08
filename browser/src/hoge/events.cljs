@@ -18,3 +18,9 @@
    (js/console.log "dispatch http")
    {:db {:title "fetching..."}
     :http {}}))
+
+(rf/reg-event-db
+ ::navigated
+ (fn [db [_ new-match]]
+   (js/console.log "navigated" (clj->js new-match))
+   (assoc db :current-route new-match)))
