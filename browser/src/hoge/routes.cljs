@@ -20,7 +20,6 @@
 (defn ^:export navigate
   [path]
   (when-let [match (reitit.core/match-by-path router path)]
-    (js/console.log "navigate" (clj->js match))
     (rf/dispatch [::events/navigated match])))
 
 (defn on-navigate

@@ -5,7 +5,7 @@
   (rf/->interceptor
    {:id ::debug
     :before (fn [{{event :event} :coeffects :as ctx}]
-              (js/console.log (clj->js event))
+              (js/console.log (js/window.performance.now) (clj->js event))
               ctx)}))
 
 (rf/reg-global-interceptor debug)

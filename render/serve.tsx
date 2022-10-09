@@ -26,6 +26,7 @@ function App(_) {
 async function serveHttp(conn: Deno.Conn) {
   const httpConn = Deno.serveHttp(conn);
   for await (const req of httpConn) {
+    const start = window.performance.now()
     app.registerOnLoad(() => {
       const body = ReactDOMServer.renderToString(<App />)
       req.respondWith(
@@ -33,6 +34,7 @@ async function serveHttp(conn: Deno.Conn) {
           status: 200,
         }),
       )
+      console.log(`Responded in ${window.performance.now() - start}ms`)
     })
     app.navigate("/a")
   }

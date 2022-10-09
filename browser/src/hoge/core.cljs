@@ -10,12 +10,10 @@
 
 (defn ^:export view
   [& _]
-  (js/console.log "view" "called")
   (reagent/as-element [views/main]))
 
 (defn ^:export register-on-load
   [callback]
-  (js/console.log "register" callback)
   (re-frame/dispatch [::events/register-on-load callback]))
 
 (defn ^:dev/after-load mount-root
