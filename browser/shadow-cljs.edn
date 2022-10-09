@@ -23,4 +23,5 @@
    :modules
    {:compiled {:exports {setup hoge.core/setup
                          view hoge.core/view
-                         navigate hoge.routes/navigate}}}}}}
+                         navigate hoge.routes/navigate
+                         registerOnLoad hoge.core/register-on-load}}}}}}

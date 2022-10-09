@@ -9,7 +9,15 @@
    (-> (js/fetch "https://example.com")
        (.then (fn [_]
                 (js/console.log "http" "success")
-                (rf/dispatch [::events/set-title "success"])))
+                (rf/dispatch [::events/set-title "success"])
+                (rf/dispatch [::events/loaded])))
        (.catch (fn [_]
                  (js/console.log "http" "failure")
-                 (rf/dispatch [::events/set-title "failure"]))))))
+                 (rf/dispatch [::events/set-title "failure"])
+                 (rf/dispatch [::events/loaded]))))))
+
+(rf/reg-fx
+ :loaded
+ (fn [f]
+   (when f
+     (f))))

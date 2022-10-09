@@ -10,10 +10,12 @@
    ["/"
     ["a"
      {:name ::a
-      :view (fn [_] [:p "Welcome to A"])}]
+      :view (fn [_] [:p "Welcome to A"])
+      :controllers [{:start #(rf/dispatch [::events/fetch-example])}]}]
     ["b"
      {:name ::b
-      :view (fn [_] [:p "Welcome to B"])}]]))
+      :view (fn [_] [:p "Welcome to B"])
+      :controllers [{:start #(rf/dispatch [::events/fetch-example])}]}]]))
 
 (defn ^:export navigate
   [path]

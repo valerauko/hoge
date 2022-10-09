@@ -3,7 +3,8 @@
 
 (rf/reg-sub
  ::title
- :title)
+ (fn [db]
+   (:title db)))
 
 (rf/reg-sub
  ::current-route
