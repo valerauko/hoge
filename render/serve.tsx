@@ -5,14 +5,15 @@ import * as React from "https://esm.sh/react@17.0.2"
 import * as ReactDOMServer from "https://esm.sh/react-dom@17.0.2/server"
 import * as app from 'http://browser:8280/js/compiled.js'
 
-function App(_) {
+function App({ title }) {
   const Elem = app.view
+  const expandedTitle = title ? `${title} | HOGE` : 'HOGE'
   return (
     <html>
       <head>
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <title>HOGE</title>
+        <title>{expandedTitle}</title>
       </head>
       <body>
         <div id="app">
@@ -26,22 +27,24 @@ function App(_) {
 
 async function serveHttp(conn: Deno.Conn) {
   const httpConn = Deno.serveHttp(conn);
-  for await (const req of httpConn) {
+  for await (const event of httpConn) {
     const start = window.performance.now()
+    const req = event.request
+    const path = new URL(req.url).pathname
     app.setup()
-    app.registerOnLoad(() => {
-      const body = ReactDOMServer.renderToString(<App />)
-      req.respondWith(
+    app.registerOnLoad(({ status, title }) => {
+      const body = ReactDOMServer.renderToString(<App title={title} />)
+      event.respondWith(
         new Response(body, {
           headers: {
             'content-type': 'text/html; charset=UTF-8'
           },
-          status: 200,
+          status,
         }),
       )
-      console.log(`Responded in ${window.performance.now() - start}ms`)
+      console.log(`Completed ${status} ${req.method} ${path} in ${window.performance.now() - start}ms`)
     })
-    app.navigate("/a")
+    app.navigate(path)
   }
 }
 

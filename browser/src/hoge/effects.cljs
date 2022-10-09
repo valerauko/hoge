@@ -6,15 +6,17 @@
  :http
  (fn [_]
    (-> (js/fetch "http://localhost:8280")
-       (.then (fn [_]
-                (rf/dispatch [::events/set-title "success"])
-                (rf/dispatch [::events/loaded])))
-       (.catch (fn [_]
-                 (rf/dispatch [::events/set-title "failure"])
-                 (rf/dispatch [::events/loaded]))))))
+       (.then #(rf/dispatch [::events/http-success %]))
+       (.catch #(rf/dispatch [::events/http-error %])))))
 
 (rf/reg-fx
  :loaded
- (fn [f]
+ (fn [[f args]]
    (when f
-     (f))))
+     (apply f args))))
+
+(rf/reg-fx
+ :title
+ (fn [title]
+   (when (exists? js/document)
+     (set! js/document.title (str title " | HOGE")))))

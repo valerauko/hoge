@@ -4,8 +4,7 @@
 
 (defn main
   [& _]
-  (let [route @(rf/subscribe [::subs/current-route])
-        title @(rf/subscribe [::subs/title])]
+  (let [title @(rf/subscribe [::subs/title])]
     [:div
      [:h1
       title]
@@ -13,9 +12,12 @@
       [:a
        {:href "/a"}
        "A"]
+      " "
       [:a
        {:href "/b"}
        "B"]]
-     (if-let [view (-> route :data :view)]
-       [view]
-       [:p "Requested page not found"])]))
+     (let [route @(rf/subscribe [::subs/current-route])
+           view (-> route :data :view)]
+       (if view
+         [view]
+         [:p "Requested page not found"]))]))
