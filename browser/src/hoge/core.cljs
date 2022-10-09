@@ -1,7 +1,7 @@
 (ns hoge.core
-  (:require [reagent.core :as reagent]
-            [reagent.dom :as rdom]
-            [re-frame.core :as re-frame]
+  (:require ["react-dom" :as react-dom]
+            [reagent.core :as reagent]
+            [re-frame.core :as rf]
             [hoge.effects]
             [hoge.interceptors]
             [hoge.events :as events]
@@ -14,22 +14,17 @@
 
 (defn ^:export register-on-load
   [callback]
-  (re-frame/dispatch [::events/register-on-load callback]))
-
-(defn ^:dev/after-load mount-root
-  []
-  (routes/start-router)
-  (re-frame/clear-subscription-cache!)
-  (let [root-el (.getElementById js/document "app")]
-    (rdom/unmount-component-at-node root-el)
-    (rdom/render [views/main] root-el)))
+  (rf/dispatch [::events/register-on-load callback]))
 
 (defn ^:export setup
   []
-  (re-frame/clear-subscription-cache!)
-  (re-frame/dispatch-sync [::events/initialize-db]))
+  (rf/clear-subscription-cache!)
+  (rf/dispatch-sync [::events/initialize-db]))
 
-(defn ^:export mount
+(defn ^:export hydrate
   []
+  (js/console.log "Hydrating...")
   (setup)
-  (mount-root))
+  (routes/start-router)
+  (let [root (js/document.getElementById "app")]
+    (react-dom/hydrate (view) root)))

@@ -4,6 +4,7 @@ services:
     image: ichimai_frontend
     working_dir: /usr/local/browser
     ports:
+      - 8280:8280
       - 9630:9630
     volumes:
       - ./browser:/usr/local/browser

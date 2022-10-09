@@ -11,11 +11,11 @@
 
  :builds
  {:app
-  {:target :esm
+  {:target :browser
    :output-dir "public/js"
    :asset-path "/js"
    :modules
-   {:app {:init-fn hoge.core/mount}}}
+   {:app {:init-fn hoge.core/hydrate}}}
   :compiled
   {:target :esm
    :output-dir "public/js"
@@ -23,5 +23,6 @@
    :modules
    {:compiled {:exports {setup hoge.core/setup
                          view hoge.core/view
+                         hydrate hoge.core/hydrate
                          navigate hoge.routes/navigate
                          registerOnLoad hoge.core/register-on-load}}}}}}

@@ -5,7 +5,7 @@
 (rf/reg-fx
  :http
  (fn [_]
-   (-> (js/fetch "https://example.com")
+   (-> (js/fetch "http://localhost:8280")
        (.then (fn [_]
                 (rf/dispatch [::events/set-title "success"])
                 (rf/dispatch [::events/loaded])))

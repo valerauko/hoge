@@ -9,6 +9,13 @@
     [:div
      [:h1
       title]
+     [:nav
+      [:a
+       {:href "/a"}
+       "A"]
+      [:a
+       {:href "/b"}
+       "B"]]
      (if-let [view (-> route :data :view)]
        [view]
        [:p "Requested page not found"])]))
