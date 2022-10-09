@@ -31,6 +31,9 @@ async function serveHttp(conn: Deno.Conn) {
       const body = ReactDOMServer.renderToString(<App />)
       req.respondWith(
         new Response(body, {
+          headers: {
+            'content-type': 'text/html; charset=UTF-8'
+          },
           status: 200,
         }),
       )
