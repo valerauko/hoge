@@ -1,5 +1,4 @@
 .clj-kondo/.cache
 node_modules
-cljs-runtime
 .shadow-cljs
-public/js
+browser/public/js
