@@ -5,7 +5,6 @@
 (rf/reg-event-fx
  ::initialize-db
  (fn [_ _]
-   (js/console.log "init db")
    {:db {:title "hello, world"}}))
 
 (rf/reg-event-db
@@ -16,7 +15,6 @@
 (rf/reg-event-fx
  ::fetch-example
  (fn [{db :db} _]
-   (js/console.log "dispatch http")
    {:db (assoc db :title "fetching...")
     :http {}}))
 
@@ -33,12 +31,10 @@
 (rf/reg-event-db
  ::register-on-load
  (fn [db [_ f]]
-   (js/console.log "register event" f)
    (assoc db :on-load f)))
 
 (rf/reg-event-fx
  ::loaded
  (fn [{{:keys [on-load] :as db} :db} _]
-   (js/console.log "loaded" (clj->js db))
    {:db (dissoc db :on-load)
     :loaded on-load}))

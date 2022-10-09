@@ -3,6 +3,7 @@
             [reagent.dom :as rdom]
             [re-frame.core :as re-frame]
             [hoge.effects]
+            [hoge.interceptors]
             [hoge.events :as events]
             [hoge.routes :as routes]
             [hoge.views :as views]))
