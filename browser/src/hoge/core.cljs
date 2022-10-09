@@ -1,6 +1,7 @@
 (ns hoge.core
   (:require ["react-dom" :as react-dom]
             [reagent.core :as reagent]
+            [reagent.dom]
             [re-frame.core :as rf]
             [hoge.effects]
             [hoge.interceptors]
@@ -20,6 +21,12 @@
   []
   (rf/clear-subscription-cache!)
   (rf/dispatch-sync [::events/initialize-db]))
+
+(defn ^:dev/after-load remount []
+  (rf/clear-subscription-cache!)
+  (let [root-el (js/document.getElementById "app")]
+    (reagent.dom/unmount-component-at-node root-el)
+    (reagent.dom/render [views/main] root-el)))
 
 (defn ^:export hydrate
   []
