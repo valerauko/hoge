@@ -8,6 +8,10 @@ Featuring:
 * [Deno](https://deno.land/)
 * docker-compose
 
+## Just run it
+
+`docker-compose up`
+
 ## What's HOGE
 
 The Japanese version of `foo`.
