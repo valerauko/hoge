@@ -45,3 +45,7 @@ Both the server-side response and the client-side hydration depends on the `::lo
 There's no `document` on Deno, so anything that would touch it (such as setting the page title) has to check if it `exists?` or result in an error.
 
 This is also the reason that Deno has to reference the `:compiled` JS: the dev build shadow-cljs generates has `document` references that make the server crash.
+
+### No hot-reload on Deno
+
+Deno doesn't do hot reloading, so if there's a change to either `serve.tsx` or `compiled.js`, it should be restarted with `docker-compose restart ssr`.
