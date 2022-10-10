@@ -2,7 +2,7 @@
     "name": "hoge",
     "version": "0.1.0",
     "scripts": {
-      "dev": "yarn && shadow-cljs watch app",
+      "dev": "yarn && yarn clean && shadow-cljs run hoge.dev/watch",
       "build": "yarn clean && shadow-cljs release app",
       "lint": "shadow-cljs run clj-kondo.main --lint src",
       "clean": "rm -rf public/js target"

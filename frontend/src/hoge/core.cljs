@@ -24,6 +24,7 @@
 
 (defn ^:dev/after-load remount []
   (rf/clear-subscription-cache!)
+  (routes/start-router)
   (let [root-el (js/document.getElementById "app")]
     (reagent.dom/unmount-component-at-node root-el)
     (reagent.dom/render [views/main] root-el)))
@@ -33,5 +34,6 @@
   (js/console.log "Hydrating...")
   (setup)
   (routes/start-router)
-  (let [root (js/document.getElementById "app")]
-    (react-dom/hydrate (view) root)))
+  (register-on-load
+   #(let [root (js/document.getElementById "app")]
+      (react-dom/hydrate (view) root))))

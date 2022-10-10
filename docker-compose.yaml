@@ -1,25 +1,44 @@
 version: '3'
 services:
-  browser:
-    image: ichimai_frontend
-    working_dir: /usr/local/browser
+  frontend:
+    build:
+      context: ./dev
+      dockerfile: node_java.Dockerfile
+    working_dir: /usr/local/frontend
     ports:
-      - 8280:8280
       - 9630:9630
     volumes:
-      - ./browser:/usr/local/browser
+      - ./frontend:/usr/local/frontend
       - maven:/root/.m2
       - node_modules:/usr/local/node_modules
     command: yarn dev
 
   ssr:
     image: denoland/deno:1.26.1
-    ports:
-      - 3050:3050
     volumes:
       - ./render:/usr/local/render
     working_dir: /usr/local/render
-    command: deno run --reload --allow-net serve.tsx
+    command: |
+      bash -c '
+        until deno run --reload --allow-net serve.tsx; do
+          echo "Deno died, retrying..."
+          sleep 5
+        done
+      '
+
+  gateway:
+    volumes:
+      - ./dev/nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - 3000:3000
+    networks:
+      default:
+        aliases:
+          # setting this so it has the same hostname both
+          # in the docker virtual network and from the
+          # host's point of view as well
+          - hoge.lvh.me
+    image: nginx:1.23.1-alpine
 
 volumes:
   maven:

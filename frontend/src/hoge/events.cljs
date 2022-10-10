@@ -55,6 +55,15 @@
      (assoc db :current-route
             (assoc new-match :controllers controllers)))))
 
+(rf/reg-event-fx
+ ::not-found
+ (fn [{db :db} _]
+   (when-let [old-match (:current-route db)]
+     (doseq [controller (reverse (:controllers old-match))]
+       (router/apply-controller controller :stop)))
+   {:db (assoc db :current-route nil)
+    :dispatch [::loaded (clj->js {:status 404})]}))
+
 (rf/reg-event-db
  ::register-on-load
  (fn [db [_ f]]

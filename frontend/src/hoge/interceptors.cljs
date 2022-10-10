@@ -1,5 +1,6 @@
 (ns hoge.interceptors
-  (:require [re-frame.core :as rf]))
+  (:require [re-frame.core :as rf]
+            [hoge.config :as config]))
 
 (def debug
   (rf/->interceptor
@@ -8,4 +9,5 @@
               (js/console.log (js/window.performance.now) (clj->js event))
               ctx)}))
 
-(rf/reg-global-interceptor debug)
+(when config/debug?
+  (rf/reg-global-interceptor debug))

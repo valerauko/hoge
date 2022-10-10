@@ -19,15 +19,16 @@
 
 (defn ^:export navigate
   [path]
-  (when-let [match (reitit.core/match-by-path router path)]
-    (rf/dispatch [::events/navigated match])))
+  (if-let [match (reitit.core/match-by-path router path)]
+    (rf/dispatch [::events/navigated match])
+    (rf/dispatch [::events/not-found])))
 
 (defn on-navigate
   [new-match]
   (when new-match
     (rf/dispatch [::events/navigated new-match])))
 
-(defn ^:dev/after-load start-router
+(defn start-router
   []
   (easy/start!
    router

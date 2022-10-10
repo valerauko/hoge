@@ -5,7 +5,7 @@
 (rf/reg-fx
  :http
  (fn [_]
-   (-> (js/fetch "http://localhost:8280")
+   (-> (js/fetch "http://hoge.lvh.me:3000/js/app.js")
        (.then #(rf/dispatch [::events/http-success %]))
        (.catch #(rf/dispatch [::events/http-error %])))))
 
