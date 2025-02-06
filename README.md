@@ -10,7 +10,9 @@ Featuring:
 
 ## Just run it
 
-`docker-compose up`
+`docker compose up`
+
+Note: if you're using Podman, you'll have to have some fun configuring the networking so that the containers can talk to each other.
 
 ## What's HOGE
 
