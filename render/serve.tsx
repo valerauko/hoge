@@ -48,7 +48,7 @@ async function serveHttp(conn: Deno.Conn) {
           status,
         }),
       )
-      console.log(`Completed ${status} ${req.method} ${path} in ${performance.now() - start}ms`)
+      console.log(`Completed ${status} ${req.method} ${path} in ${(performance.now() - start).toFixed(4)}ms`)
     })
     app.navigate(path)
   }
