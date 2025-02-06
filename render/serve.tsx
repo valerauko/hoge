@@ -8,7 +8,7 @@ import * as app from 'http://hoge.lvh.me:3000/js/compiled.js'
 async function serveHttp(conn: Deno.Conn) {
   const httpConn = Deno.serveHttp(conn);
   for await (const event of httpConn) {
-    const start = window.performance.now()
+    const start = performance.now()
     const req = event.request
     const path = new URL(req.url).pathname
     app.setup()
@@ -48,7 +48,7 @@ async function serveHttp(conn: Deno.Conn) {
           status,
         }),
       )
-      console.log(`Completed ${status} ${req.method} ${path} in ${window.performance.now() - start}ms`)
+      console.log(`Completed ${status} ${req.method} ${path} in ${performance.now() - start}ms`)
     })
     app.navigate(path)
   }
