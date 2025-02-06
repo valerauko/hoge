@@ -2,3 +2,5 @@
 node_modules
 .shadow-cljs
 frontend/public/js
+
+.lsp/.cache/
