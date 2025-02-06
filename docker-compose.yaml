@@ -14,13 +14,13 @@ services:
     command: yarn dev
 
   ssr:
-    image: denoland/deno:1.26.1
+    image: denoland/deno:2.1.9
     volumes:
       - ./render:/usr/local/render
     working_dir: /usr/local/render
     command: |
       bash -c '
-        until deno run --reload --allow-net serve.tsx; do
+        until deno run --reload --allow-net --allow-import serve.tsx; do
           echo "Deno died, retrying..."
           sleep 5
         done
@@ -38,7 +38,7 @@ services:
           # in the docker virtual network and from the
           # host's point of view as well
           - hoge.lvh.me
-    image: nginx:1.23.1-alpine
+    image: nginx:1.27.4-alpine
 
 volumes:
   maven:
