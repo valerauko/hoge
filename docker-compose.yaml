@@ -43,3 +43,6 @@ volumes:
   maven:
   shadow_maven:
   node_modules:
+
+networks:
+  default:
